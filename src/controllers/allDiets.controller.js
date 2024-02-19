@@ -1,12 +1,13 @@
-const search = require("../controllers/allApi");
+const { connectApi } = require("../utils/connectApi");
 const dietsModel = require("../models/diets.model");
 const dietModel = require("../models/diets.model");
 const allDiets = async (req, res) => {
   try {
+    const apiData = await connectApi();
     const diets = await dietModel.find({});
     if (diets.length) return res.status(200).json(diets);
 
-    const call = search.results;
+    const call = apiData.results;
     const dietsFromApi = [];
     call.forEach((el) =>
       el.diets.forEach((nombre) => dietsFromApi.push(nombre))
